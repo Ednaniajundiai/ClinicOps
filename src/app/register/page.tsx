@@ -77,11 +77,14 @@ export default function RegisterPage() {
       }
 
       // 2. Buscar plano trial/starter padrão
-      const { data: planoDefault } = await supabase
+      const { data: planoDefaultData } = await supabase
         .from('planos')
         .select('id')
         .eq('nome', 'Starter')
         .single()
+        
+      const planoDefault = planoDefaultData as { id: string } | null
+
 
       if (!planoDefault) {
         // Se não existir plano, cria um básico
@@ -94,27 +97,34 @@ export default function RegisterPage() {
             limite_usuarios: 3,
             limite_pacientes: 500,
             recursos: { relatorios_basicos: true },
-          })
+          } as any)
           .select('id')
           .single()
+        
+        const novoPlanoData = novoPlano as unknown as { id: string } | null
 
-        if (planoError || !novoPlano) {
+        if (planoError || !novoPlanoData) {
           console.error('Erro ao criar plano:', planoError)
         }
       }
+      
+      const defaultPlanId = planoDefault?.id || 
+        ((await supabase.from('planos').select('id').limit(1).single()).data as unknown as { id: string } | null)?.id
 
       // 3. Criar clínica
-      const { data: clinica, error: clinicaError } = await supabase
+      const { data: clinicaData, error: clinicaError } = await supabase
         .from('clinicas')
         .insert({
           nome: data.nomeClinica,
-          plano_id: planoDefault?.id || (await supabase.from('planos').select('id').limit(1).single()).data?.id,
+          plano_id: defaultPlanId,
           email: data.email,
           status: 'trial',
           trial_ends_at: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString(), // 14 dias
-        })
+        } as any)
         .select('id')
         .single()
+      
+      const clinica = clinicaData as { id: string } | null
 
       if (clinicaError || !clinica) {
         console.error('Erro ao criar clínica:', clinicaError)
@@ -135,7 +145,7 @@ export default function RegisterPage() {
           email: data.email,
           nome: data.nome,
           perfil: 'admin',
-        })
+        } as any)
 
       if (usuarioError) {
         console.error('Erro ao criar usuário:', usuarioError)

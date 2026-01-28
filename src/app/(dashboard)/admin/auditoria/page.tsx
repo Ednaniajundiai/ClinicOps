@@ -186,7 +186,7 @@ export default function AuditoriaPage() {
 
       const csvContent = [
         ['Data', 'Usuario', 'Acao', 'Tabela', 'Registro ID', 'Dados Anteriores', 'Dados Novos'].join(';'),
-        ...(data || []).map(log => [
+        ...((data as unknown as LogAuditoria[]) || []).map(log => [
           formatDate(log.created_at),
           log.usuarios?.nome || 'Sistema',
           log.acao,

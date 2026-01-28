@@ -161,6 +161,7 @@ export default function ClinicasPage() {
       if (editingClinica) {
         const { error } = await supabase
           .from('clinicas')
+          // @ts-ignore
           .update({
             nome: formData.nome,
             email: formData.email || null,
@@ -180,6 +181,7 @@ export default function ClinicasPage() {
       } else {
         const { error } = await supabase
           .from('clinicas')
+          // @ts-ignore
           .insert({
             nome: formData.nome,
             email: formData.email || null,

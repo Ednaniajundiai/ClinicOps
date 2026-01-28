@@ -32,11 +32,13 @@ export function useClinica() {
         return
       }
 
-      const { data: clinica } = await supabase
+      const { data: clinicaData } = await supabase
         .from('clinicas')
         .select('*')
         .eq('id', usuario.clinica_id)
         .single()
+      
+      const clinica = clinicaData as Clinica | null
 
       if (clinica) {
         const { data: plano } = await supabase
@@ -67,6 +69,7 @@ export function useClinica() {
 
     const { error } = await supabase
       .from('clinicas')
+      // @ts-ignore
       .update(data)
       .eq('id', state.clinica.id)
 

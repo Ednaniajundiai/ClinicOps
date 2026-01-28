@@ -106,6 +106,7 @@ export default function PacientesPage() {
       // Soft delete
       const { error } = await supabase
         .from('pacientes')
+        // @ts-ignore
         .update({ ativo: false })
         .eq('id', id)
 

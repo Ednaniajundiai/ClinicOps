@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
@@ -35,7 +35,7 @@ const TIPOS_ATENDIMENTO = [
   'Outro',
 ]
 
-export default function NovoAtendimentoPage() {
+function NovoAtendimentoContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const pacienteIdParam = searchParams.get('paciente_id')
@@ -374,5 +374,13 @@ export default function NovoAtendimentoPage() {
         </div>
       </form>
     </div>
+  )
+}
+
+export default function NovoAtendimentoPage() {
+  return (
+    <Suspense fallback={<div>Carregando...</div>}>
+      <NovoAtendimentoContent />
+    </Suspense>
   )
 }

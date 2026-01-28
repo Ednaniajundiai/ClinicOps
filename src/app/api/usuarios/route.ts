@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient, createAdminClient } from '@/lib/supabase/server'
-import type { UsuarioInsert } from '@/lib/supabase/database.types'
+import type { Usuario, UsuarioInsert } from '@/lib/supabase/database.types'
 
 export async function POST(request: NextRequest) {
   try {
@@ -19,11 +19,13 @@ export async function POST(request: NextRequest) {
     }
 
     // Verificar se usuario e admin da clinica
-    const { data: currentUser } = await supabase
+    const { data: currentUserData } = await supabase
       .from('usuarios')
-      .select('perfil, clinica_id')
+      .select('*')
       .eq('auth_user_id', user.id)
       .single()
+
+    const currentUser = currentUserData as unknown as Usuario | null
 
     if (!currentUser || (currentUser.perfil !== 'admin' && currentUser.perfil !== 'master')) {
       return NextResponse.json(
@@ -74,7 +76,7 @@ export async function POST(request: NextRequest) {
             especialidade: especialidade || null,
             registro_profissional: registro_profissional || null,
             ativo: true,
-          })
+          } as any)
           .select()
           .single()
 
@@ -103,7 +105,7 @@ export async function POST(request: NextRequest) {
           especialidade: especialidade || null,
           registro_profissional: registro_profissional || null,
           ativo: true,
-        })
+        } as any)
         .select()
         .single()
 

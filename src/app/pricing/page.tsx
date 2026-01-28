@@ -202,9 +202,9 @@ export default function PricingPage() {
                 {COMPARISON_ROWS.map((row) => (
                   <tr key={row.key} className="border-b">
                     <td className="py-4 px-4">
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2" title={row.tooltip}>
                         <span>{row.label}</span>
-                        <HelpCircle className="h-4 w-4 text-muted-foreground" title={row.tooltip} />
+                        <HelpCircle className="h-4 w-4 text-muted-foreground" />
                       </div>
                     </td>
                     {PLANS.map((plan) => {

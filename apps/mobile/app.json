@@ -1,0 +1,38 @@
+{
+  "expo": {
+    "name": "ClinicOps",
+    "slug": "clinicops-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "scheme": "clinicops",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0891B2"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.clinicops.mobile"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0891B2"
+      },
+      "package": "com.clinicops.mobile"
+    },
+    "web": {
+      "bundler": "metro",
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-secure-store"
+    ],
+    "extra": {
+      "supabaseUrl": "https://ezrqulthfujonlsuklts.supabase.co",
+      "supabaseAnonKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV6cnF1bHRoZnVqb25sc3VrbHRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk1Mjg4MTEsImV4cCI6MjA4NTEwNDgxMX0.xv0msuDFdmN0wdlbflHq4BaLhLLirlveY3VEkVxxvWk"
+    }
+  }
+}

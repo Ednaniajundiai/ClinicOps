@@ -74,6 +74,7 @@ export default function NovoPacientePage() {
     try {
       const { error } = await supabase
         .from('pacientes')
+        // @ts-ignore
         .insert({
           clinica_id: clinica.id,
           nome: data.nome,

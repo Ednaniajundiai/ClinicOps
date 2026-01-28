@@ -133,6 +133,7 @@ export default function PlanosPage() {
       if (editingPlano) {
         const { error } = await supabase
           .from('planos')
+          // @ts-ignore
           .update(planoData)
           .eq('id', editingPlano.id)
 
@@ -145,6 +146,7 @@ export default function PlanosPage() {
       } else {
         const { error } = await supabase
           .from('planos')
+          // @ts-ignore
           .insert(planoData)
 
         if (error) throw error
@@ -200,6 +202,7 @@ export default function PlanosPage() {
     try {
       const { error } = await supabase
         .from('planos')
+        // @ts-ignore
         .update({ ativo: !plano.ativo })
         .eq('id', plano.id)
 

@@ -1,6 +1,6 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
-import type { Database } from './database.types'
+import type { Database, Usuario } from './database.types'
 
 export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({
@@ -9,7 +9,7 @@ export async function updateSession(request: NextRequest) {
     },
   })
 
-  const supabase = createServerClient<Database>(
+  const supabase = createServerClient<Database, 'public'>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
@@ -77,11 +77,13 @@ export async function updateSession(request: NextRequest) {
     const url = request.nextUrl.clone()
     
     // Busca perfil do usuário para redirecionar corretamente
-    const { data: usuario } = await supabase
+    const { data: usuarioData } = await supabase
       .from('usuarios')
       .select('perfil')
       .eq('auth_user_id', user.id)
       .single()
+    
+    const usuario = usuarioData as unknown as Usuario | null
 
     if (usuario?.perfil === 'master') {
       url.pathname = '/master'
