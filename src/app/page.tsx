@@ -16,15 +16,15 @@ import {
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-background text-foreground selection:bg-primary selection:text-primary-foreground">
       {/* Header */}
-      <header className="border-b sticky top-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-50">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+      <header className="fixed top-0 w-full border-b border-white/5 bg-background/60 backdrop-blur-md z-50">
+        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Building2 className="h-8 w-8 text-primary" />
-            <span className="text-2xl font-bold">ClinicOps</span>
+            <Building2 className="h-6 w-6 text-primary" />
+            <span className="text-xl font-bold tracking-tight">ClinicOps</span>
           </div>
-          <nav className="hidden md:flex items-center gap-6">
+          <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
             <Link href="#features" className="text-muted-foreground hover:text-foreground transition-colors">
               Funcionalidades
             </Link>
@@ -32,14 +32,16 @@ export default function Home() {
               Depoimentos
             </Link>
             <Link href="/pricing" className="text-muted-foreground hover:text-foreground transition-colors">
-              Precos
+              Preços
             </Link>
-            <Link href="/login" className="text-muted-foreground hover:text-foreground transition-colors">
-              Entrar
-            </Link>
-            <Button asChild>
-              <Link href="/register">Comecar Gratis</Link>
-            </Button>
+            <div className="flex items-center gap-4 ml-4">
+              <Link href="/login" className="text-muted-foreground hover:text-foreground transition-colors">
+                Entrar
+              </Link>
+              <Button asChild size="sm" className="font-semibold">
+                <Link href="/register">Começar Grátis</Link>
+              </Button>
+            </div>
           </nav>
           {/* Mobile menu button */}
           <Button variant="ghost" className="md:hidden" size="icon">
@@ -51,43 +53,46 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <section className="py-20 md:py-32 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/5" />
-        <div className="container mx-auto px-4 text-center relative">
-          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
-            <Zap className="h-4 w-4" />
-            Plataforma completa para gestao de clinicas
+      <section className="pt-32 pb-20 md:pt-40 md:pb-32 relative overflow-hidden">
+        {/* Grid Background Effect */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none" />
+        
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-1.5 rounded-full text-xs font-semibold mb-8 border border-primary/20">
+            <Zap className="h-3 w-3" />
+            Plataforma completa para gestão de clínicas
           </div>
-          <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6">
-            Gestao Inteligente para
-            <span className="text-primary block mt-2">Clinicas Medicas</span>
+          <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-6 bg-gradient-to-b from-white to-white/70 bg-clip-text text-transparent pb-2">
+            Gestão Inteligente para<br />
+            <span className="text-primary block mt-1">Clínicas Médicas</span>
           </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
-            Simplifique a administracao da sua clinica com nossa plataforma completa. 
-            Pacientes, atendimentos, documentos e muito mais em um so lugar.
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
+            Simplifique a administração da sua clínica com nossa plataforma completa. 
+            Pacientes, atendimentos, documentos e muito mais em um só lugar.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" asChild className="text-lg px-8">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <Button size="lg" asChild className="h-12 px-8 text-base font-semibold shadow-[0_0_20px_rgba(249,115,22,0.3)] hover:shadow-[0_0_30px_rgba(249,115,22,0.5)] transition-all duration-300">
               <Link href="/register">
-                Comecar Gratuitamente
+                Começar Gratuitamente
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
-            <Button size="lg" variant="outline" asChild className="text-lg px-8">
+            <Button size="lg" variant="outline" asChild className="h-12 px-8 text-base bg-transparent border-white/10 hover:bg-white/5">
               <Link href="#features">Conhecer Funcionalidades</Link>
             </Button>
           </div>
-          <div className="mt-12 flex items-center justify-center gap-8 text-sm text-muted-foreground">
+          
+          <div className="mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-center gap-8 text-sm text-muted-foreground">
             <div className="flex items-center gap-2">
-              <CheckCircle2 className="h-4 w-4 text-green-500" />
-              <span>14 dias gratis</span>
+              <CheckCircle2 className="h-4 w-4 text-primary" />
+              <span>14 dias grátis</span>
             </div>
             <div className="flex items-center gap-2">
-              <CheckCircle2 className="h-4 w-4 text-green-500" />
-              <span>Sem cartao de credito</span>
+              <CheckCircle2 className="h-4 w-4 text-primary" />
+              <span>Sem cartão de crédito</span>
             </div>
             <div className="flex items-center gap-2">
-              <CheckCircle2 className="h-4 w-4 text-green-500" />
+              <CheckCircle2 className="h-4 w-4 text-primary" />
               <span>Cancele quando quiser</span>
             </div>
           </div>
@@ -95,68 +100,68 @@ export default function Home() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-12 border-y bg-muted/30">
+      <section className="py-12 border-y border-white/5 bg-white/[0.02]">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div>
-              <div className="text-3xl md:text-4xl font-bold text-primary">500+</div>
-              <div className="text-sm text-muted-foreground mt-1">Clinicas Ativas</div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-white/5">
+            <div className="px-4">
+              <div className="text-3xl md:text-5xl font-bold text-white tracking-tight">500+</div>
+              <div className="text-sm font-medium text-muted-foreground mt-2">Clínicas Ativas</div>
             </div>
-            <div>
-              <div className="text-3xl md:text-4xl font-bold text-primary">50k+</div>
-              <div className="text-sm text-muted-foreground mt-1">Pacientes Gerenciados</div>
+            <div className="px-4">
+              <div className="text-3xl md:text-5xl font-bold text-white tracking-tight">50k+</div>
+              <div className="text-sm font-medium text-muted-foreground mt-2">Pacientes</div>
             </div>
-            <div>
-              <div className="text-3xl md:text-4xl font-bold text-primary">99.9%</div>
-              <div className="text-sm text-muted-foreground mt-1">Uptime Garantido</div>
+            <div className="px-4">
+              <div className="text-3xl md:text-5xl font-bold text-white tracking-tight">99.9%</div>
+              <div className="text-sm font-medium text-muted-foreground mt-2">Uptime</div>
             </div>
-            <div>
-              <div className="text-3xl md:text-4xl font-bold text-primary">4.9</div>
-              <div className="text-sm text-muted-foreground mt-1">Avaliacao Media</div>
+            <div className="px-4">
+              <div className="text-3xl md:text-5xl font-bold text-white tracking-tight">4.9</div>
+              <div className="text-sm font-medium text-muted-foreground mt-2">Avaliação</div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-20">
+      <section id="features" className="py-32 relative">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Tudo que sua clinica precisa
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6">
+              Tudo que sua clínica precisa
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Ferramentas poderosas para otimizar cada aspecto da gestao da sua clinica
+              Ferramentas poderosas para otimizar cada aspecto da gestão da sua clínica
             </p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             <FeatureCard 
-              icon={<Users className="h-10 w-10" />}
-              title="Gestao de Pacientes"
-              description="Cadastro completo, historico de atendimentos e documentos organizados em um so lugar."
+              icon={<Users className="h-6 w-6" />}
+              title="Gestão de Pacientes"
+              description="Cadastro completo, histórico de atendimentos e documentos organizados em um só lugar."
             />
             <FeatureCard 
-              icon={<Calendar className="h-10 w-10" />}
+              icon={<Calendar className="h-6 w-6" />}
               title="Agenda Inteligente"
               description="Registre consultas, procedimentos e acompanhe toda a jornada do paciente."
             />
             <FeatureCard 
-              icon={<Shield className="h-10 w-10" />}
-              title="Seguranca LGPD"
-              description="Dados criptografados, auditoria completa e conformidade total com a legislacao."
+              icon={<Shield className="h-6 w-6" />}
+              title="Segurança LGPD"
+              description="Dados criptografados, auditoria completa e conformidade total com a legislação."
             />
             <FeatureCard 
-              icon={<Building2 className="h-10 w-10" />}
-              title="Multi-Clinicas"
-              description="Gerencie multiplas unidades com isolamento total de dados entre elas."
+              icon={<Building2 className="h-6 w-6" />}
+              title="Multi-Clínicas"
+              description="Gerencie múltiplas unidades com isolamento total de dados entre elas."
             />
             <FeatureCard 
-              icon={<BarChart3 className="h-10 w-10" />}
-              title="Relatorios Completos"
-              description="Metricas e indicadores para tomada de decisoes estrategicas do seu negocio."
+              icon={<BarChart3 className="h-6 w-6" />}
+              title="Relatórios Completos"
+              description="Métricas e indicadores para tomada de decisões estratégicas do seu negócio."
             />
             <FeatureCard 
-              icon={<Clock className="h-10 w-10" />}
+              icon={<Clock className="h-6 w-6" />}
               title="Economia de Tempo"
               description="Interface intuitiva que sua equipe aprende em minutos, sem treinamento extenso."
             />
@@ -165,51 +170,52 @@ export default function Home() {
       </section>
 
       {/* Security Section */}
-      <section className="py-20 bg-muted/50">
+      <section className="py-24 bg-white/[0.02] border-y border-white/5">
         <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
-              <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
+              <div className="inline-flex items-center gap-2 text-primary text-sm font-semibold mb-6">
                 <Lock className="h-4 w-4" />
-                Seguranca em primeiro lugar
+                Segurança em primeiro lugar
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                Seus dados protegidos com tecnologia de ponta
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-6">
+                Seus dados protegidos com<br />tecnologia de ponta
               </h2>
-              <p className="text-lg text-muted-foreground mb-8">
-                Utilizamos as melhores praticas de seguranca do mercado para garantir que os dados 
+              <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+                Utilizamos as melhores práticas de segurança do mercado para garantir que os dados 
                 dos seus pacientes estejam sempre protegidos e em conformidade com a LGPD.
               </p>
               <ul className="space-y-4">
-                <SecurityItem text="Criptografia AES-256 para dados sensiveis" />
-                <SecurityItem text="Row Level Security (RLS) para isolamento de dados" />
-                <SecurityItem text="Autenticacao de dois fatores disponivel" />
-                <SecurityItem text="Auditoria completa de todas as acoes" />
-                <SecurityItem text="Backups automaticos diarios" />
+                <SecurityItem text="Criptografia AES-256 para dados sensíveis" />
+                <SecurityItem text="Row Level Security (RLS) para isolamento" />
+                <SecurityItem text="Autenticação de dois fatores disponível" />
+                <SecurityItem text="Auditoria completa de todas as ações" />
+                <SecurityItem text="Backups automáticos diários" />
               </ul>
             </div>
             <div className="relative">
-              <div className="bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl p-8 md:p-12">
+              <div className="absolute -inset-4 bg-primary/20 blur-3xl opacity-20 rounded-full" />
+              <div className="relative bg-card/50 backdrop-blur-sm border border-white/10 rounded-2xl p-8 md:p-12">
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-background rounded-lg p-4 shadow-sm">
-                    <Shield className="h-8 w-8 text-primary mb-2" />
-                    <div className="font-semibold">LGPD</div>
-                    <div className="text-sm text-muted-foreground">Conformidade total</div>
+                  <div className="bg-background/50 border border-white/5 rounded-lg p-6 hover:border-primary/50 transition-colors">
+                    <Shield className="h-8 w-8 text-primary mb-3" />
+                    <div className="font-semibold mb-1">LGPD</div>
+                    <div className="text-xs text-muted-foreground">Conformidade total</div>
                   </div>
-                  <div className="bg-background rounded-lg p-4 shadow-sm">
-                    <Lock className="h-8 w-8 text-primary mb-2" />
-                    <div className="font-semibold">SSL/TLS</div>
-                    <div className="text-sm text-muted-foreground">Conexao segura</div>
+                  <div className="bg-background/50 border border-white/5 rounded-lg p-6 hover:border-primary/50 transition-colors">
+                    <Lock className="h-8 w-8 text-primary mb-3" />
+                    <div className="font-semibold mb-1">SSL/TLS</div>
+                    <div className="text-xs text-muted-foreground">Conexão segura</div>
                   </div>
-                  <div className="bg-background rounded-lg p-4 shadow-sm">
-                    <Users className="h-8 w-8 text-primary mb-2" />
-                    <div className="font-semibold">RLS</div>
-                    <div className="text-sm text-muted-foreground">Isolamento total</div>
+                  <div className="bg-background/50 border border-white/5 rounded-lg p-6 hover:border-primary/50 transition-colors">
+                    <Users className="h-8 w-8 text-primary mb-3" />
+                    <div className="font-semibold mb-1">RLS</div>
+                    <div className="text-xs text-muted-foreground">Isolamento total</div>
                   </div>
-                  <div className="bg-background rounded-lg p-4 shadow-sm">
-                    <BarChart3 className="h-8 w-8 text-primary mb-2" />
-                    <div className="font-semibold">Auditoria</div>
-                    <div className="text-sm text-muted-foreground">Logs completos</div>
+                  <div className="bg-background/50 border border-white/5 rounded-lg p-6 hover:border-primary/50 transition-colors">
+                    <BarChart3 className="h-8 w-8 text-primary mb-3" />
+                    <div className="font-semibold mb-1">Auditoria</div>
+                    <div className="text-xs text-muted-foreground">Logs completos</div>
                   </div>
                 </div>
               </div>
@@ -219,100 +225,73 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section */}
-      <section id="testimonials" className="py-20">
+      <section id="testimonials" className="py-32">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6">
               O que nossos clientes dizem
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Veja como o ClinicOps esta transformando a gestao de clinicas em todo o Brasil
+              Veja como o ClinicOps está transformando a gestão de clínicas em todo o Brasil
             </p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             <TestimonialCard 
               name="Dra. Maria Santos"
               role="Dermatologista"
-              clinic="Clinica Derma Care"
-              image="/avatars/maria.jpg"
+              clinic="Clínica Derma Care"
               rating={5}
-              text="O ClinicOps revolucionou a forma como gerenciamos nossa clinica. A interface e intuitiva e o suporte e excepcional. Recomendo para todos os colegas."
+              text="O ClinicOps revolucionou a forma como gerenciamos nossa clínica. A interface é intuitiva e o suporte é excepcional. Recomendo para todos os colegas."
             />
             <TestimonialCard 
               name="Dr. Carlos Oliveira"
               role="Cardiologista"
-              clinic="Instituto do Coracao"
-              image="/avatars/carlos.jpg"
+              clinic="Instituto do Coração"
               rating={5}
-              text="Finalmente encontrei uma solucao que atende todas as nossas necessidades. A seguranca dos dados e a facilidade de uso sao impressionantes."
+              text="Finalmente encontrei uma solução que atende todas as nossas necessidades. A segurança dos dados e a facilidade de uso são impressionantes."
             />
             <TestimonialCard 
               name="Dra. Ana Paula Costa"
               role="Pediatra"
-              clinic="Clinica Infantil Alegria"
-              image="/avatars/ana.jpg"
+              clinic="Clínica Infantil Alegria"
               rating={5}
-              text="Minha equipe adorou o sistema. Economizamos horas de trabalho por semana e nossos pacientes percebem a diferenca no atendimento."
-            />
-            <TestimonialCard 
-              name="Dr. Roberto Lima"
-              role="Ortopedista"
-              clinic="Ortho Center"
-              image="/avatars/roberto.jpg"
-              rating={5}
-              text="A integracao com diferentes funcionalidades em uma unica plataforma foi o diferencial. Nao precisamos mais de varios sistemas separados."
-            />
-            <TestimonialCard 
-              name="Dra. Fernanda Alves"
-              role="Ginecologista"
-              clinic="Clinica Feminina"
-              image="/avatars/fernanda.jpg"
-              rating={5}
-              text="O sistema de auditoria e compliance me da tranquilidade quanto a LGPD. E fundamental para clinicas que lidam com dados sensiveis."
-            />
-            <TestimonialCard 
-              name="Dr. Marcos Souza"
-              role="Clinico Geral"
-              clinic="Clinica Saude Total"
-              image="/avatars/marcos.jpg"
-              rating={5}
-              text="Migramos de outro sistema e a transicao foi suave. O suporte nos ajudou em cada passo. Estamos muito satisfeitos com a escolha."
+              text="Minha equipe adorou o sistema. Economizamos horas de trabalho por semana e nossos pacientes percebem a diferença no atendimento."
             />
           </div>
         </div>
       </section>
 
       {/* Pricing Preview Section */}
-      <section className="py-20 bg-muted/50">
+      <section className="py-24 bg-white/[0.02] border-y border-white/5">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6">
             Planos para cada necessidade
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
-            Escolha o plano ideal para o tamanho da sua clinica. Todos incluem suporte e atualizacoes.
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-16">
+            Escolha o plano ideal para o tamanho da sua clínica. Todos incluem suporte e atualizações.
           </p>
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-12">
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-16">
             <PricingPreviewCard 
               name="Starter"
               price="R$ 97"
-              description="Ideal para clinicas pequenas"
-              features={["Ate 3 usuarios", "500 pacientes", "Suporte por email"]}
+              description="Ideal para clínicas pequenas"
+              features={["Até 3 usuários", "500 pacientes", "Suporte por email"]}
             />
             <PricingPreviewCard 
               name="Professional"
               price="R$ 197"
-              description="Para clinicas em crescimento"
-              features={["Ate 10 usuarios", "2.000 pacientes", "Suporte prioritario"]}
+              description="Para clínicas em crescimento"
+              features={["Até 10 usuários", "2.000 pacientes", "Suporte prioritário"]}
               highlighted
             />
             <PricingPreviewCard 
               name="Enterprise"
               price="R$ 397"
-              description="Para grandes operacoes"
-              features={["Usuarios ilimitados", "Pacientes ilimitados", "Suporte 24/7"]}
+              description="Para grandes operações"
+              features={["Usuários ilimitados", "Pacientes ilimitados", "Suporte 24/7"]}
             />
           </div>
-          <Button size="lg" asChild>
+          <Button size="lg" asChild className="h-12 px-8">
             <Link href="/pricing">
               Ver todos os detalhes
               <ArrowRight className="ml-2 h-4 w-4" />
@@ -322,83 +301,78 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-primary text-primary-foreground">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Pronto para transformar sua clinica?
+      <section className="py-32 relative overflow-hidden">
+        <div className="absolute inset-0 bg-primary/10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent" />
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <h2 className="text-4xl md:text-6xl font-bold tracking-tighter mb-8">
+            Pronto para transformar<br />sua clínica?
           </h2>
-          <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
-            Junte-se a centenas de clinicas que ja utilizam o ClinicOps para otimizar suas operacoes.
+          <p className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto">
+            Junte-se a centenas de clínicas que já utilizam o ClinicOps para otimizar suas operações.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="secondary" asChild className="text-lg px-8">
+            <Button size="lg" asChild className="h-14 px-8 text-lg font-semibold shadow-lg shadow-primary/20">
               <Link href="/register">
                 Criar Conta Gratuita
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
-            <Button size="lg" variant="outline" asChild className="text-lg px-8 bg-transparent border-primary-foreground/20 hover:bg-primary-foreground/10">
-              <Link href="/login">Ja tenho conta</Link>
+            <Button size="lg" variant="outline" asChild className="h-14 px-8 text-lg bg-background/50 border-white/10 hover:bg-background/80">
+              <Link href="/login">Já tenho conta</Link>
             </Button>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t py-12">
+      <footer className="border-t border-white/5 py-16 bg-background">
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-4 gap-8 mb-8">
+          <div className="grid md:grid-cols-4 gap-12 mb-12">
             <div>
-              <div className="flex items-center gap-2 mb-4">
+              <div className="flex items-center gap-2 mb-6">
                 <Building2 className="h-6 w-6 text-primary" />
-                <span className="font-bold text-lg">ClinicOps</span>
+                <span className="font-bold text-lg tracking-tight">ClinicOps</span>
               </div>
-              <p className="text-sm text-muted-foreground">
-                Plataforma completa para gestao de clinicas medicas com seguranca e eficiencia.
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Plataforma completa para gestão de clínicas médicas com segurança e eficiência.
+                Tecnologia de ponta para sua saúde.
               </p>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Produto</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><Link href="#features" className="hover:text-foreground">Funcionalidades</Link></li>
-                <li><Link href="/pricing" className="hover:text-foreground">Precos</Link></li>
-                <li><Link href="#" className="hover:text-foreground">Seguranca</Link></li>
-                <li><Link href="#" className="hover:text-foreground">Atualizacoes</Link></li>
+              <h4 className="font-semibold mb-6 text-foreground">Produto</h4>
+              <ul className="space-y-3 text-sm text-muted-foreground">
+                <li><Link href="#features" className="hover:text-primary transition-colors">Funcionalidades</Link></li>
+                <li><Link href="/pricing" className="hover:text-primary transition-colors">Preços</Link></li>
+                <li><Link href="#" className="hover:text-primary transition-colors">Segurança</Link></li>
+                <li><Link href="#" className="hover:text-primary transition-colors">Atualizações</Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Empresa</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><Link href="#" className="hover:text-foreground">Sobre nos</Link></li>
-                <li><Link href="#" className="hover:text-foreground">Blog</Link></li>
-                <li><Link href="#" className="hover:text-foreground">Carreiras</Link></li>
-                <li><Link href="#" className="hover:text-foreground">Contato</Link></li>
+              <h4 className="font-semibold mb-6 text-foreground">Empresa</h4>
+              <ul className="space-y-3 text-sm text-muted-foreground">
+                <li><Link href="#" className="hover:text-primary transition-colors">Sobre nós</Link></li>
+                <li><Link href="#" className="hover:text-primary transition-colors">Blog</Link></li>
+                <li><Link href="#" className="hover:text-primary transition-colors">Carreiras</Link></li>
+                <li><Link href="#" className="hover:text-primary transition-colors">Contato</Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Legal</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><Link href="#" className="hover:text-foreground">Termos de uso</Link></li>
-                <li><Link href="#" className="hover:text-foreground">Privacidade</Link></li>
-                <li><Link href="#" className="hover:text-foreground">LGPD</Link></li>
-                <li><Link href="#" className="hover:text-foreground">Cookies</Link></li>
+              <h4 className="font-semibold mb-6 text-foreground">Legal</h4>
+              <ul className="space-y-3 text-sm text-muted-foreground">
+                <li><Link href="#" className="hover:text-primary transition-colors">Termos de uso</Link></li>
+                <li><Link href="#" className="hover:text-primary transition-colors">Privacidade</Link></li>
+                <li><Link href="#" className="hover:text-primary transition-colors">LGPD</Link></li>
+                <li><Link href="#" className="hover:text-primary transition-colors">Cookies</Link></li>
               </ul>
             </div>
           </div>
-          <div className="border-t pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-sm text-muted-foreground">
-              2024 ClinicOps. Todos os direitos reservados.
+              &copy; 2024 ClinicOps. Todos os direitos reservados.
             </p>
-            <div className="flex items-center gap-4">
-              <Link href="#" className="text-muted-foreground hover:text-foreground">
-                <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
-              </Link>
-              <Link href="#" className="text-muted-foreground hover:text-foreground">
-                <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-              </Link>
-              <Link href="#" className="text-muted-foreground hover:text-foreground">
-                <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-              </Link>
+            <div className="flex items-center gap-6">
+              {/* Social Icons would go here */}
             </div>
           </div>
         </div>
@@ -417,10 +391,10 @@ function FeatureCard({
   description: string 
 }) {
   return (
-    <div className="bg-background p-6 rounded-xl border hover:shadow-lg transition-shadow">
-      <div className="text-primary mb-4 p-3 bg-primary/10 rounded-lg w-fit">{icon}</div>
-      <h3 className="text-xl font-semibold mb-2">{title}</h3>
-      <p className="text-muted-foreground">{description}</p>
+    <div className="bg-card/30 p-8 rounded-2xl border border-white/5 hover:border-primary/20 hover:bg-card/50 transition-all duration-300 group">
+      <div className="text-primary mb-6 p-3 bg-primary/10 rounded-xl w-fit group-hover:scale-110 transition-transform duration-300">{icon}</div>
+      <h3 className="text-xl font-bold mb-3 tracking-tight">{title}</h3>
+      <p className="text-muted-foreground leading-relaxed">{description}</p>
     </div>
   )
 }
@@ -428,8 +402,10 @@ function FeatureCard({
 function SecurityItem({ text }: { text: string }) {
   return (
     <li className="flex items-center gap-3">
-      <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0" />
-      <span>{text}</span>
+      <div className="h-5 w-5 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+        <CheckCircle2 className="h-3 w-3 text-primary" />
+      </div>
+      <span className="text-muted-foreground">{text}</span>
     </li>
   )
 }
@@ -438,34 +414,32 @@ function TestimonialCard({
   name, 
   role, 
   clinic,
-  image,
   rating,
   text 
 }: { 
   name: string
   role: string
   clinic: string
-  image: string
   rating: number
   text: string 
 }) {
   return (
-    <div className="bg-background p-6 rounded-xl border">
-      <div className="flex gap-1 mb-4">
+    <div className="bg-card/30 p-8 rounded-2xl border border-white/5">
+      <div className="flex gap-1 mb-6">
         {Array.from({ length: rating }).map((_, i) => (
-          <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+          <Star key={i} className="h-4 w-4 fill-primary text-primary" />
         ))}
       </div>
-      <p className="text-muted-foreground mb-6">{text}</p>
-      <div className="flex items-center gap-3">
-        <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
-          <span className="text-primary font-semibold text-sm">
+      <p className="text-muted-foreground mb-6 leading-relaxed">"{text}"</p>
+      <div className="flex items-center gap-4">
+        <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center border border-primary/20">
+          <span className="text-primary font-bold text-sm">
             {name.split(' ').map(n => n[0]).join('')}
           </span>
         </div>
         <div>
           <div className="font-semibold text-sm">{name}</div>
-          <div className="text-xs text-muted-foreground">{role} - {clinic}</div>
+          <div className="text-xs text-muted-foreground">{role} • {clinic}</div>
         </div>
       </div>
     </div>
@@ -486,23 +460,23 @@ function PricingPreviewCard({
   highlighted?: boolean
 }) {
   return (
-    <div className={`p-6 rounded-xl border bg-background ${highlighted ? 'border-primary ring-2 ring-primary' : ''}`}>
+    <div className={`p-8 rounded-2xl border transition-all duration-300 ${highlighted ? 'bg-primary/5 border-primary/50 ring-1 ring-primary/50' : 'bg-card/30 border-white/5 hover:border-white/10'}`}>
       {highlighted && (
-        <span className="bg-primary text-primary-foreground text-xs font-medium px-3 py-1 rounded-full">
+        <span className="bg-primary text-primary-foreground text-xs font-bold px-3 py-1 rounded-full mb-4 inline-block">
           Mais Popular
         </span>
       )}
-      <h3 className="text-xl font-semibold mt-4">{name}</h3>
-      <p className="text-muted-foreground text-sm mb-4">{description}</p>
-      <div className="mb-6">
-        <span className="text-4xl font-bold">{price}</span>
-        <span className="text-muted-foreground">/mes</span>
+      <h3 className="text-xl font-bold mt-2">{name}</h3>
+      <p className="text-muted-foreground text-sm mb-6">{description}</p>
+      <div className="mb-8">
+        <span className="text-4xl font-bold tracking-tight">{price}</span>
+        <span className="text-muted-foreground">/mês</span>
       </div>
-      <ul className="space-y-3">
+      <ul className="space-y-4">
         {features.map((feature, index) => (
-          <li key={index} className="flex items-center gap-2">
-            <CheckCircle2 className="h-4 w-4 text-primary" />
-            <span className="text-sm">{feature}</span>
+          <li key={index} className="flex items-center gap-3">
+            <CheckCircle2 className={`h-4 w-4 ${highlighted ? 'text-primary' : 'text-muted-foreground'}`} />
+            <span className="text-sm text-muted-foreground">{feature}</span>
           </li>
         ))}
       </ul>
