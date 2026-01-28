@@ -1,143 +1,90 @@
 # ClinicOps - Plataforma SaaS para Gestão de Clínicas
 
-Sistema de gestão multi-tenant para clínicas médicas, desenvolvido com Next.js 14, Supabase e React Native.
+> Case Técnico para Vaga de Desenvolvedor Full-Stack
 
-## Stack Tecnológico
+![ClinicOps Hero](https://via.placeholder.com/1200x600/09090b/F97316?text=ClinicOps+Dashboard)
 
-- **Frontend Web**: Next.js 14 (App Router) + TypeScript + Tailwind CSS + shadcn/ui
-- **Backend**: Supabase (PostgreSQL + Auth + Storage + Edge Functions)
-- **Mobile**: React Native + Expo (em desenvolvimento)
-- **Pagamentos**: Stripe
-- **Email**: Brevo (SendinBlue)
+O **ClinicOps** é uma plataforma SaaS multi-tenant desenvolvida para modernizar a gestão de clínicas médicas. Focada em segurança, performance e experiência do usuário, a aplicação oferece segregação total de dados e conformidade com a LGPD.
 
-## Funcionalidades
+## 🚀 Stack Tecnológica
 
-- Multi-tenancy com Row Level Security (RLS)
-- Três perfis de usuário: Master, Admin, Operacional
-- Gestão de pacientes e atendimentos
-- Upload de documentos
-- Sistema de auditoria (LGPD)
-- Integração com Stripe para assinaturas
+- **Frontend:** Next.js 14 (App Router), TypeScript, Tailwind CSS, shadcn/ui.
+- **Backend/BaaS:** Supabase (Auth, Database, Storage, Edge Functions).
+- **Segurança:** Row Level Security (RLS) avançado, Criptografia de dados sensíveis (AES-256 via pgcrypto).
+- **Pagamentos:** Stripe (Assinaturas, Portal do Cliente, Webhooks).
+- **Email:** Integração transacional (Brevo/Resend).
 
-## Requisitos
+## 🛡️ Destaques de Segurança & Arquitetura
 
+1.  **Multi-tenancy Nativo:**
+    - Segregação lógica de dados via `clinica_id`.
+    - Políticas RLS (Row Level Security) garantem que usuários acessem *apenas* dados de sua própria clínica, direto na camada do banco de dados.
+
+2.  **Proteção LGPD:**
+    - Dados sensíveis (como CPF) são criptografados em repouso usando `pgcrypto` no PostgreSQL.
+    - Auditoria imutável: Todas as ações críticas (INSERT, UPDATE, DELETE) são logadas na tabela `auditoria`.
+
+3.  **Performance:**
+    - Frontend otimizado com Server Components.
+    - Estilização minimalista e leve com Tailwind CSS.
+
+## 🛠️ Configuração do Projeto
+
+### Pré-requisitos
 - Node.js 18+
-- npm ou yarn
 - Conta no Supabase
-- Conta no Stripe (para pagamentos)
+- Conta no Stripe
 
-## Instalação
-
-### 1. Clone o repositório
-
+### 1. Clonar e Instalar
 ```bash
-git clone <url-do-repositorio>
+git clone https://github.com/seu-usuario/clinicops.git
 cd clinicops
-```
-
-### 2. Instale as dependências
-
-```bash
 npm install
 ```
 
-### 3. Configure o Supabase
-
-1. Crie um projeto no [Supabase](https://supabase.com)
-2. Execute o script SQL em `supabase/migrations/001_initial_schema.sql` no SQL Editor
-3. Copie as credenciais do projeto
-
-### 4. Configure as variáveis de ambiente
+### 2. Configurar Variáveis de Ambiente
+Copie o arquivo `.env.example` para `.env.local` e preencha as chaves:
 
 ```bash
 cp .env.example .env.local
 ```
 
-Edite `.env.local` com suas credenciais:
+### 3. Configurar Banco de Dados (Supabase)
+Execute o script de migração localizado em `supabase/migrations/001_initial_schema.sql` no SQL Editor do seu projeto Supabase.
 
-```env
-NEXT_PUBLIC_SUPABASE_URL=https://seu-projeto.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=sua-anon-key
-```
+> **Importante:** Configure a chave de criptografia no banco antes de usar:
+> ```sql
+> ALTER DATABASE postgres SET app.encryption_key = 'sua-chave-secreta-aqui';
+> ```
 
-### 5. Execute o projeto
-
+### 4. Rodar Localmente
 ```bash
 npm run dev
 ```
+Acesse `http://localhost:3000`.
 
-Acesse [http://localhost:3000](http://localhost:3000)
-
-## Estrutura do Projeto
+## 📂 Estrutura do Projeto
 
 ```
-clinicops/
-├── src/
-│   ├── app/                    # Next.js App Router
-│   │   ├── (dashboard)/        # Rotas protegidas dos dashboards
-│   │   │   ├── master/         # Dashboard do admin da plataforma
-│   │   │   ├── admin/          # Dashboard do admin da clínica
-│   │   │   └── app/            # Dashboard do usuário operacional
-│   │   ├── login/              # Página de login
-│   │   ├── register/           # Página de registro
-│   │   └── page.tsx            # Landing page
-│   ├── components/
-│   │   ├── ui/                 # Componentes shadcn/ui
-│   │   └── layouts/            # Layouts compartilhados
-│   ├── hooks/                  # Custom hooks
-│   │   ├── use-auth.ts         # Hook de autenticação
-│   │   └── use-clinica.ts      # Hook de contexto da clínica
-│   └── lib/
-│       ├── supabase/           # Configuração do Supabase
-│       │   ├── client.ts       # Cliente para componentes client
-│       │   ├── server.ts       # Cliente para Server Components
-│       │   └── database.types.ts # Tipos do banco de dados
-│       └── utils.ts            # Utilitários
-├── supabase/
-│   └── migrations/             # Scripts SQL
-└── middleware.ts               # Middleware de autenticação
+src/
+├── app/
+│   ├── (dashboard)/      # Rotas protegidas (Admin/App)
+│   ├── api/              # Rotas de API (Stripe, Webhooks)
+│   └── page.tsx          # Landing Page (Pública)
+├── components/           # Componentes UI (shadcn)
+├── lib/                  # Utilitários e configurações (Stripe, Email)
+└── supabase/             # Migrations e Types
 ```
 
-## Criando o Usuário Master
+## ✅ Checklist de Entrega (Case Técnico)
 
-Após criar o primeiro usuário via interface:
+- [x] Landing Page e Página de Pricing
+- [x] Autenticação (Login, Cadastro, Recuperação)
+- [x] Dashboard Master (Gestão de Planos)
+- [x] Dashboard da Clínica (Pacientes, Atendimentos)
+- [x] Multi-tenancy com RLS
+- [x] Tabela de Auditoria
+- [x] Integração Stripe
 
-1. Acesse o Supabase Dashboard
-2. Vá em Authentication > Users
-3. Copie o `id` do usuário
-4. Execute no SQL Editor:
-
-```sql
-INSERT INTO usuarios (auth_user_id, email, nome, perfil)
-VALUES ('uuid-do-auth-user', 'seu@email.com', 'Seu Nome', 'master');
-```
-
-## Perfis de Usuário
-
-| Perfil | Acesso | Descrição |
-|--------|--------|-----------|
-| Master | `/master` | Administrador da plataforma, vê todas as clínicas |
-| Admin | `/admin` | Administrador da clínica, gerencia equipe e configurações |
-| Profissional | `/app` | Profissional de saúde, registra atendimentos |
-| Recepcionista | `/app` | Recepção, cadastra pacientes e agenda |
-
-## Row Level Security (RLS)
-
-Todas as tabelas possuem políticas RLS que garantem:
-
-- **Isolamento de dados**: Cada clínica só vê seus próprios dados
-- **Controle de acesso**: Cada perfil tem permissões específicas
-- **Auditoria**: Todas as operações são registradas
-
-## Próximos Passos
-
-- [ ] Implementar CRUD completo de pacientes
-- [ ] Implementar CRUD de atendimentos
-- [ ] Integrar Stripe para pagamentos
-- [ ] Implementar sistema de auditoria
-- [ ] Desenvolver app mobile com Expo
-- [ ] Deploy na Vercel
-
-## Licença
-
-Projeto desenvolvido para fins de avaliação técnica.
+---
+Desenvolvido por Ednan Ferreira da Silva
