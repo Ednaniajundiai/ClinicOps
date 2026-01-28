@@ -7,12 +7,23 @@ import { Badge } from '@/components/ui/badge'
 import { createClient } from '@/lib/supabase/client'
 import { useClinica } from '@/hooks/use-clinica'
 import { formatCurrency } from '@/lib/utils'
+import { SubscriptionManagement } from '@/components/subscription-management'
 
 interface DashboardStats {
   totalUsuarios: number
   totalPacientes: number
   atendimentosHoje: number
   totalDocumentos: number
+}
+
+interface AtividadeRecente {
+  id: string
+  acao: string
+  tabela: string
+  created_at: string
+  usuarios: {
+    nome: string
+  } | null
 }
 
 export default function AdminDashboard() {
@@ -23,6 +34,7 @@ export default function AdminDashboard() {
     atendimentosHoje: 0,
     totalDocumentos: 0,
   })
+  const [atividades, setAtividades] = useState<AtividadeRecente[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const supabase = createClient()
 
@@ -64,12 +76,29 @@ export default function AdminDashboard() {
           .select('*', { count: 'exact', head: true })
           .eq('clinica_id', clinica.id)
 
+        // Atividades recentes
+        const { data: atividadesData } = await supabase
+          .from('auditoria')
+          .select(`
+            id,
+            acao,
+            tabela,
+            created_at,
+            usuarios (
+              nome
+            )
+          `)
+          .eq('clinica_id', clinica.id)
+          .order('created_at', { ascending: false })
+          .limit(5)
+
         setStats({
           totalUsuarios: usuariosCount || 0,
           totalPacientes: pacientesCount || 0,
           atendimentosHoje: atendimentosCount || 0,
           totalDocumentos: documentosCount || 0,
         })
+        setAtividades(atividadesData || [])
       } catch (error) {
         console.error('Erro ao buscar estatísticas:', error)
       } finally {
@@ -175,13 +204,27 @@ export default function AdminDashboard() {
         ))}
       </div>
 
+      {/* Gerenciamento de Assinatura */}
+      {clinica && (
+        <SubscriptionManagement
+          clinicaId={clinica.id}
+          planoAtual={plano ? {
+            nome: plano.nome,
+            preco: plano.preco_mensal,
+            recursos: plano.recursos as Record<string, boolean | string>
+          } : null}
+          status={clinica.status}
+          stripeCustomerId={clinica.stripe_customer_id}
+        />
+      )}
+
       {/* Plano e Assinatura */}
       <div className="grid gap-4 md:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle>Seu Plano</CardTitle>
+            <CardTitle>Detalhes do Plano</CardTitle>
             <CardDescription>
-              Detalhes do plano atual
+              Limites e recursos do seu plano
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -196,7 +239,7 @@ export default function AdminDashboard() {
                   <span className="font-medium">{formatCurrency(plano.preco_mensal)}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Limite de Usuários</span>
+                  <span className="text-sm text-muted-foreground">Limite de Usuarios</span>
                   <span className="font-medium">
                     {plano.limite_usuarios === -1 ? 'Ilimitado' : plano.limite_usuarios}
                   </span>
@@ -210,7 +253,7 @@ export default function AdminDashboard() {
               </>
             ) : (
               <p className="text-sm text-muted-foreground">
-                Carregando informações do plano...
+                Carregando informacoes do plano...
               </p>
             )}
           </CardContent>
@@ -220,13 +263,47 @@ export default function AdminDashboard() {
           <CardHeader>
             <CardTitle>Atividade Recente</CardTitle>
             <CardDescription>
-              Últimas ações na clínica
+              Ultimas acoes na clinica
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-muted-foreground">
-              Nenhuma atividade registrada ainda.
-            </p>
+            {atividades.length === 0 ? (
+              <p className="text-sm text-muted-foreground">
+                Nenhuma atividade registrada ainda.
+              </p>
+            ) : (
+              <div className="space-y-3">
+                {atividades.map((atividade) => {
+                  const acaoLabels: Record<string, string> = {
+                    INSERT: 'Criou',
+                    UPDATE: 'Atualizou',
+                    DELETE: 'Removeu',
+                  }
+                  const tabelaLabels: Record<string, string> = {
+                    pacientes: 'paciente',
+                    atendimentos: 'atendimento',
+                    documentos: 'documento',
+                    usuarios: 'usuario',
+                  }
+                  return (
+                    <div key={atividade.id} className="flex items-start gap-3 text-sm">
+                      <div className="flex-1">
+                        <p>
+                          <span className="font-medium">
+                            {atividade.usuarios?.nome || 'Sistema'}
+                          </span>{' '}
+                          {acaoLabels[atividade.acao] || atividade.acao}{' '}
+                          {tabelaLabels[atividade.tabela] || atividade.tabela}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {new Date(atividade.created_at).toLocaleString('pt-BR')}
+                        </p>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>

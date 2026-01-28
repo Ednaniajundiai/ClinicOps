@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import { Building2, Users, CreditCard, TrendingUp } from 'lucide-react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { createClient } from '@/lib/supabase/client'
@@ -132,34 +133,111 @@ export default function MasterDashboard() {
 
       {/* Recent Activity */}
       <div className="grid gap-4 md:grid-cols-2">
-        <Card>
-          <CardHeader>
-            <CardTitle>Clínicas Recentes</CardTitle>
-            <CardDescription>
-              Últimas clínicas cadastradas na plataforma
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-muted-foreground">
-              Nenhuma clínica cadastrada ainda.
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Atividade do Sistema</CardTitle>
-            <CardDescription>
-              Eventos recentes da plataforma
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-muted-foreground">
-              Nenhuma atividade registrada ainda.
-            </p>
-          </CardContent>
-        </Card>
+        <ClinicasRecentes />
+        <AtividadeRecente />
       </div>
     </div>
+  )
+}
+
+function ClinicasRecentes() {
+  const [clinicas, setClinicas] = useState<any[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const supabase = createClient()
+
+  useEffect(() => {
+    const fetchClinicas = async () => {
+      const { data } = await supabase
+        .from('clinicas')
+        .select('id, nome, status, created_at, planos(nome)')
+        .order('created_at', { ascending: false })
+        .limit(5)
+
+      setClinicas(data || [])
+      setIsLoading(false)
+    }
+    fetchClinicas()
+  }, [supabase])
+
+  const getStatusColor = (status: string) => {
+    const colors: Record<string, string> = {
+      ativa: 'bg-green-500',
+      trial: 'bg-yellow-500',
+      suspensa: 'bg-red-500',
+      cancelada: 'bg-gray-500',
+    }
+    return colors[status] || 'bg-gray-500'
+  }
+
+  return (
+    <Card>
+      <CardHeader className="flex flex-row items-center justify-between">
+        <div>
+          <CardTitle>Clinicas Recentes</CardTitle>
+          <CardDescription>
+            Ultimas clinicas cadastradas
+          </CardDescription>
+        </div>
+        <a href="/master/clinicas" className="text-sm text-primary hover:underline">
+          Ver todas
+        </a>
+      </CardHeader>
+      <CardContent>
+        {isLoading ? (
+          <p className="text-sm text-muted-foreground">Carregando...</p>
+        ) : clinicas.length === 0 ? (
+          <p className="text-sm text-muted-foreground">
+            Nenhuma clinica cadastrada ainda.
+          </p>
+        ) : (
+          <div className="space-y-4">
+            {clinicas.map((clinica) => (
+              <div key={clinica.id} className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className={`h-2 w-2 rounded-full ${getStatusColor(clinica.status)}`} />
+                  <div>
+                    <p className="text-sm font-medium">{clinica.nome}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {clinica.planos?.nome || 'Sem plano'}
+                    </p>
+                  </div>
+                </div>
+                <span className="text-xs text-muted-foreground">
+                  {formatCurrency(0)}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  )
+}
+
+function AtividadeRecente() {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Atividade do Sistema</CardTitle>
+        <CardDescription>
+          Eventos recentes da plataforma
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-4">
+          <div className="flex items-center gap-3">
+            <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
+              <TrendingUp className="h-4 w-4 text-primary" />
+            </div>
+            <div>
+              <p className="text-sm font-medium">Sistema iniciado</p>
+              <p className="text-xs text-muted-foreground">
+                Plataforma ClinicOps ativa e funcionando
+              </p>
+            </div>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
   )
 }

@@ -6,7 +6,8 @@ import {
   Settings,
   BarChart3,
   CreditCard,
-  FileText
+  FileText,
+  Shield
 } from 'lucide-react'
 import { DashboardLayout } from '@/components/layouts/dashboard-layout'
 
@@ -30,6 +31,11 @@ const navItems = [
     title: 'Auditoria',
     href: '/admin/auditoria',
     icon: <FileText className="h-5 w-5" />,
+  },
+  {
+    title: 'Privacidade (LGPD)',
+    href: '/admin/lgpd',
+    icon: <Shield className="h-5 w-5" />,
   },
   {
     title: 'Assinatura',
